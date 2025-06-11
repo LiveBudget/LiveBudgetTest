@@ -134,7 +134,7 @@ export default function Timeline() {
           <thead className="sticky top-0 bg-white z-10">
             <tr className="bg-gray-100">
               <th className="border border-gray-500 px-4 py-2 text-left">Day</th>
-              <th className="border border-gray-500 px-8 py-2 text-left">Date</th>
+              <th className="border border-gray-500 px-6 py-2 text-left">Date</th>
               <th className="border border-gray-500 px-4 py-2 text-left">Balance</th>
             </tr>
           </thead>
@@ -145,9 +145,15 @@ export default function Timeline() {
                 ref={entry.date.toDateString() === todayStr ? todayRef : null}
                 className={`border-b border-gray-300 ${entry.date.toDateString() === todayStr ? 'bg-blue-100' : ''}`}
               >
-                <td className="border border-gray-300 px-4 py-2">{entry.date.toLocaleDateString('en-US', { weekday: 'long' })}</td>
-                <td className="border border-gray-300 px-8 py-2">{entry.date.toLocaleDateString('en-US')}</td>
-                <td className="border border-gray-300 px-4 py-2">${entry.endingBalance.toLocaleString()}</td>
+                <td className="border border-gray-300 px-4 py-2">
+                  {entry.date.toLocaleDateString('en-US', { weekday: 'long' })}
+                </td>
+                <td className="border border-gray-300 px-6 py-2">
+                  {entry.date.toLocaleDateString('en-US')}
+                </td>
+                <td className="border border-gray-300 px-4 py-2">
+                  ${entry.endingBalance.toLocaleString()}
+                </td>
               </tr>
             ))}
           </tbody>
