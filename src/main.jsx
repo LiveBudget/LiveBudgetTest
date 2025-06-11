@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import './index.css' // <- This line is crucial
+import './index.css';
 import Timeline from './Timeline.jsx'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
