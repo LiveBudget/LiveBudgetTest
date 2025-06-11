@@ -1,10 +1,10 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import Timeline from './Timeline';
+import React from 'react'
+import ReactDOM from 'react-dom/client'
+import './index.css' // <- This line is crucial
+import Timeline from './Timeline.jsx'
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
+ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <Timeline />
   </React.StrictMode>
-);
+)
