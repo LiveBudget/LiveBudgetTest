@@ -133,30 +133,30 @@ export default function Timeline() {
         <table className="table-fixed w-full border-collapse border border-gray-500">
           <thead className="sticky top-0 bg-white z-10">
             <tr className="bg-gray-100">
-              <th className="w-[80px] truncate border border-gray-500 px-1 py-2 text-left">Day</th>
-              <th className="w-[100px] truncate border border-gray-500 px-1 py-2 text-left">Date</th>
-              <th className="w-[120px] truncate border border-gray-500 px-1 py-2 text-left">Balance</th>
+              <th className="w-[60px] truncate border border-gray-500 px-1 py-2 text-left">Day</th>
+              <th className="w-[60px] truncate border border-gray-500 px-1 py-2 text-left">Date</th>
+              <th className="w-[60px] truncate border border-gray-500 px-1 py-2 text-left">Balance</th>
             </tr>
           </thead>
-          <tbody>
-            {timeline.map((entry, index) => (
-              <tr
-                key={index}
-                ref={entry.date.toDateString() === todayStr ? todayRef : null}
-                className={`border-b border-gray-300 ${entry.date.toDateString() === todayStr ? 'bg-blue-100' : ''}`}
-              >
-                <td className="w-[80px] truncate border border-gray-300 px-1 py-2">
-                  {entry.date.toLocaleDateString('en-US', { weekday: 'long' })}
-                </td>
-                <td className="w-[100px] truncate border border-gray-300 px-1 py-2">
-                  {entry.date.toLocaleDateString('en-US')}
-                </td>
-                <td className="w-[120px] truncate border border-gray-300 px-1 py-2">
-                  ${entry.endingBalance.toLocaleString()}
-                </td>
-              </tr>
-            ))}
-          </tbody>
+<tbody>
+  {timeline.map((entry, index) => (
+    <tr
+      key={index}
+      ref={entry.date.toDateString() === todayStr ? todayRef : null}
+      className={`border-b border-gray-300 ${entry.date.toDateString() === todayStr ? 'bg-blue-100' : ''}`}
+    >
+      <td className="w-[60px] truncate border border-gray-300 px-1 py-2">
+        {entry.date.toLocaleDateString('en-US', { weekday: 'long' })}
+      </td>
+      <td className="w-[60px] truncate border border-gray-300 px-1 py-2">
+        {entry.date.toLocaleDateString('en-US')}
+      </td>
+      <td className="w-[60px] truncate border border-gray-300 px-1 py-2">
+        ${entry.endingBalance.toLocaleString()}
+      </td>
+    </tr>
+  ))}
+</tbody>
         </table>
       </div>
     </div>
