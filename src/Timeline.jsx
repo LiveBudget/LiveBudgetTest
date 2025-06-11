@@ -107,6 +107,12 @@ export default function Timeline() {
     setTimeline(forecast);
   }, []);
 
+  useEffect(() => {
+    if (todayRef.current) {
+      todayRef.current.scrollIntoView({ behavior: 'auto', block: 'start' });
+    }
+  }, [timeline]);
+
   const todayStr = new Date().toDateString();
 
   const scrollToToday = () => {
@@ -123,28 +129,30 @@ export default function Timeline() {
       >
         Today
       </button>
-      <table className="w-full border-collapse border border-gray-300">
-        <thead>
-          <tr className="bg-gray-100">
-            <th className="border border-gray-300 px-4 py-2 text-left">Day</th>
-            <th className="border border-gray-300 px-4 py-2 text-left">Date</th>
-            <th className="border border-gray-300 px-4 py-2 text-left">Balance</th>
-          </tr>
-        </thead>
-        <tbody>
-          {timeline.map((entry, index) => (
-            <tr
-              key={index}
-              ref={entry.date.toDateString() === todayStr ? todayRef : null}
-              className={entry.date.toDateString() === todayStr ? 'bg-blue-100' : ''}
-            >
-              <td className="border border-gray-300 px-4 py-2">{entry.date.toLocaleDateString('en-US', { weekday: 'long' })}</td>
-              <td className="border border-gray-300 px-4 py-2">{entry.date.toLocaleDateString('en-US')}</td>
-              <td className="border border-gray-300 px-4 py-2">${entry.endingBalance.toLocaleString()}</td>
+      <div className="overflow-x-auto">
+        <table className="w-full border-collapse border border-gray-300">
+          <thead className="sticky top-0 bg-white z-10">
+            <tr className="bg-gray-100">
+              <th className="border border-gray-300 px-4 py-2 text-left">Day</th>
+              <th className="border border-gray-300 px-6 py-2 text-left">Date</th>
+              <th className="border border-gray-300 px-4 py-2 text-left">Balance</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {timeline.map((entry, index) => (
+              <tr
+                key={index}
+                ref={entry.date.toDateString() === todayStr ? todayRef : null}
+                className={`border-b-2 border-gray-400 ${entry.date.toDateString() === todayStr ? 'bg-blue-100' : ''}`}
+              >
+                <td className="border border-gray-300 px-4 py-2">{entry.date.toLocaleDateString('en-US', { weekday: 'long' })}</td>
+                <td className="border border-gray-300 px-6 py-2">{entry.date.toLocaleDateString('en-US')}</td>
+                <td className="border border-gray-300 px-4 py-2">${entry.endingBalance.toLocaleString()}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }
