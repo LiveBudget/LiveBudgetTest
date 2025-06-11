@@ -133,8 +133,8 @@ export default function Timeline() {
         <table className="table-fixed w-full border-collapse border border-gray-500">
           <thead className="sticky top-0 bg-white z-10">
             <tr className="bg-gray-100">
-              <th className="w-[15%] border border-gray-500 px-1 py-2 text-left">Day</th>
-              <th className="w-[20%] border border-gray-500 px-1 py-2 text-left">Date</th>
+              <th className="w-[10%] border border-gray-500 px-1 py-2 text-left">Day</th>
+              <th className="w-[15%] border border-gray-500 px-1 py-2 text-left">Date</th>
               <th className="w-[65%] border border-gray-500 px-1 py-2 text-left">Balance</th>
             </tr>
           </thead>
