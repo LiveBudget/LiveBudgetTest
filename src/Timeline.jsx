@@ -131,26 +131,32 @@ export default function Timeline() {
       </button>
       <div className="overflow-x-auto">
         <table className="w-full border-collapse border border-gray-500">
-          <thead className="sticky top-0 bg-white z-10">
-            <tr className="bg-gray-100">
-              <th className="border border-gray-500 px-4 py-2 text-left">Day</th>
-              <th className="border border-gray-500 px-10 py-2 text-left">Date</th>
-              <th className="border border-gray-500 px-4 py-2 text-left">Balance</th>
-            </tr>
-          </thead>
-          <tbody>
-            {timeline.map((entry, index) => (
-              <tr
-                key={index}
-                ref={entry.date.toDateString() === todayStr ? todayRef : null}
-                className={`border-b border-gray-300 ${entry.date.toDateString() === todayStr ? 'bg-blue-100' : ''}`}
-              >
-                <td className="border border-gray-300 px-4 py-2">{entry.date.toLocaleDateString('en-US', { weekday: 'long' })}</td>
-                <td className="border border-gray-300 px-10 py-2">{entry.date.toLocaleDateString('en-US')}</td>
-                <td className="border border-gray-300 px-4 py-2">${entry.endingBalance.toLocaleString()}</td>
-              </tr>
-            ))}
-          </tbody>
+<thead className="sticky top-0 bg-white z-10">
+  <tr className="bg-gray-100">
+    <th className="border border-gray-500 px-2 py-2 text-left">Day</th>
+    <th className="border border-gray-500 px-4 py-2 text-left">Date</th>
+    <th className="border border-gray-500 px-2 py-2 text-left">Balance</th>
+  </tr>
+</thead>
+<tbody>
+  {timeline.map((entry, index) => (
+    <tr
+      key={index}
+      ref={entry.date.toDateString() === todayStr ? todayRef : null}
+      className={`border-b border-gray-300 ${entry.date.toDateString() === todayStr ? 'bg-blue-100' : ''}`}
+    >
+      <td className="border border-gray-300 px-2 py-2">
+        {entry.date.toLocaleDateString('en-US', { weekday: 'long' })}
+      </td>
+      <td className="border border-gray-300 px-4 py-2">
+        {entry.date.toLocaleDateString('en-US')}
+      </td>
+      <td className="border border-gray-300 px-2 py-2">
+        ${entry.endingBalance.toLocaleString()}
+      </td>
+    </tr>
+  ))}
+</tbody>
         </table>
       </div>
     </div>
