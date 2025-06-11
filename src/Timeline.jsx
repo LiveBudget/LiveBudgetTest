@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 
 function generateForecast(startDate, endDate, startingBalance, recurringItems, minBalance, cycleType) {
@@ -70,10 +69,7 @@ function generateForecast(startDate, endDate, startingBalance, recurringItems, m
 }
 
 export default function Timeline() {
-  const [expanded, setExpanded] = useState({});
   const [timeline, setTimeline] = useState([]);
-  const [showOnlyWithActivity, setShowOnlyWithActivity] = useState(false);
-  const [activeFilters, setActiveFilters] = useState({ income: true, expense: true, transfer: true, savings: true });
   const todayRef = useRef(null);
 
   useEffect(() => {
@@ -111,10 +107,6 @@ export default function Timeline() {
     setTimeline(forecast);
   }, []);
 
-  const toggleExpand = (index) => {
-    setExpanded(prev => ({ ...prev, [index]: !prev[index] }));
-  };
-
   const todayStr = new Date().toDateString();
 
   const scrollToToday = () => {
@@ -123,79 +115,36 @@ export default function Timeline() {
     }
   };
 
-  const toggleFilter = (type) => {
-    setActiveFilters(prev => ({ ...prev, [type]: !prev[type] }));
-  };
-
   return (
-    <div className="relative p-4 space-y-2">
-      <div className="mb-4 space-y-2">
-        <label className="text-sm font-medium block">
-          <input
-            type="checkbox"
-            checked={showOnlyWithActivity}
-            onChange={() => setShowOnlyWithActivity(prev => !prev)}
-            className="mr-2"
-          />
-          Show only days with activity
-        </label>
-        <div className="flex flex-wrap gap-4 text-sm">
-          {['income', 'expense', 'transfer', 'savings'].map((type) => (
-            <label key={type} className="flex items-center space-x-1">
-              <input
-                type="checkbox"
-                checked={activeFilters[type]}
-                onChange={() => toggleFilter(type)}
-              />
-              <span className="capitalize">{type}</span>
-            </label>
-          ))}
-        </div>
-      </div>
+    <div className="p-4">
       <button
         onClick={scrollToToday}
         className="fixed bottom-4 right-4 bg-blue-600 text-white px-4 py-2 rounded-full shadow-lg z-50"
       >
         Today
       </button>
-      {timeline
-        .filter(entry => !showOnlyWithActivity || entry.transactions.length > 0)
-        .map((entry, index) => (
-          <div
-            key={index}
-            ref={entry.date.toDateString() === todayStr ? todayRef : null}
-            className={`border rounded-md p-4 cursor-pointer shadow-sm ${entry.date.toDateString() === todayStr ? 'border-blue-500 border-2' : ''}`}
-            onClick={() => toggleExpand(index)}
-          >
-            <div className="flex justify-between items-center py-2">
-              <span className="font-semibold">{entry.date.toDateString()}</span>
-              <span className="text-right font-mono">${entry.endingBalance.toLocaleString()}</span>
-            </div>
-            {expanded[index] && (
-              <div className="pt-2 space-y-1">
-                {entry.transactions
-                  .filter(txn => activeFilters[txn.type])
-                  .map((txn, i) => (
-                    <p
-                      key={i}
-                      className={`text-sm ${
-                        txn.type === "income" ? "text-green-600" :
-                        txn.type === "expense" ? "text-red-600" :
-                        txn.type === "transfer" ? "text-blue-600" :
-                        txn.type === "savings" ? "text-purple-600" : ""
-                      }`}
-                    >
-                      {txn.description}: ${txn.amount.toLocaleString()}
-                    </p>
-                  ))}
-                <textarea
-                  placeholder="Add a note for this date..."
-                  className="mt-2 w-full border border-gray-300 rounded-md p-1 text-sm"
-                ></textarea>
-              </div>
-            )}
-          </div>
-        ))}
+      <table className="w-full border-collapse border border-gray-300">
+        <thead>
+          <tr className="bg-gray-100">
+            <th className="border border-gray-300 px-4 py-2 text-left">Day</th>
+            <th className="border border-gray-300 px-4 py-2 text-left">Date</th>
+            <th className="border border-gray-300 px-4 py-2 text-left">Balance</th>
+          </tr>
+        </thead>
+        <tbody>
+          {timeline.map((entry, index) => (
+            <tr
+              key={index}
+              ref={entry.date.toDateString() === todayStr ? todayRef : null}
+              className={entry.date.toDateString() === todayStr ? 'bg-blue-100' : ''}
+            >
+              <td className="border border-gray-300 px-4 py-2">{entry.date.toLocaleDateString('en-US', { weekday: 'long' })}</td>
+              <td className="border border-gray-300 px-4 py-2">{entry.date.toLocaleDateString('en-US')}</td>
+              <td className="border border-gray-300 px-4 py-2">${entry.endingBalance.toLocaleString()}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }
